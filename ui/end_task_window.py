@@ -52,7 +52,7 @@ class EndTaskWindow(QMainWindow):
             finish_time.setDisplayFormat("HH:mm")
 
             self.task_inputs.append((row, input_field))
-            self.time_finish.append((row, finish_time.time().toString("HH:mm")))
+            self.time_finish.append((row, finish_time))
 
             project_label.setStyleSheet("font-size: 20px;")
             task_label.setStyleSheet("font-size: 20px;")
@@ -110,10 +110,17 @@ class EndTaskWindow(QMainWindow):
             if text != "":
                 _, time_obj = self.time_finish[i]
 
-                if hasattr(time_obj, 'toString'):  # Nếu là QTime
+                # Trường hợp time_obj là QTimeEdit
+                if isinstance(time_obj, QTimeEdit):
+                    time_str = time_obj.time().toString("HH:mm")
+
+                # Trường hợp là QTime
+                elif hasattr(time_obj, 'toString'):
                     time_str = time_obj.toString("HH:mm")
-                else:  # Nếu đã là string
-                    time_str = time_obj
+
+                # Nếu là chuỗi
+                else:
+                    time_str = str(time_obj)
 
                 ws.cell(row=row, column=7, value=time_str)
 
@@ -204,12 +211,14 @@ class EndTaskWindow(QMainWindow):
 
         # === Xử lý từng dòng dữ liệu ===
         row = 8
-        while True:
+        max_excel_row = 200
+        while row <= max_excel_row:
             start_cell = ws[f"F{row}"]
             end_cell = ws[f"G{row}"]
 
             if not start_cell.value or not end_cell.value:
-                break
+                row += 1
+                continue
 
             try:
                 start_time = self.parse_time(start_cell.value)
