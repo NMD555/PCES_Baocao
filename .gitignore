@@ -19,3 +19,4 @@ htmlcov/
 *.tmp 
 *.bak 
 *.ui.py 
+.vs/
