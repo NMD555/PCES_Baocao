@@ -166,6 +166,19 @@ class StartTaskWindow(QMainWindow):
 
 		self.steps_box.clear()
 		AutoCompleterComboBox(self.steps_box, tasks)
+		self.steps_box.setStyleSheet("""
+        QComboBox {
+		    /* background-color: transparent;  # nếu muốn thật sự trong suốt */
+		    color: #ffffff;
+		    border: 1px solid #555;
+		    selection-background-color: #3d7848;
+		}
+		QComboBox QAbstractItemView {
+		    /* background-color: transparent;  # không nên dùng nếu list bị lẫn nền */
+		    color: #ffffff;
+		    selection-background-color: #3d7848;
+		}
+		""")
 
 	def get_or_create_today_sheet(self, wb):
 		today = datetime.today().strftime("%d.%m")
