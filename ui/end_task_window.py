@@ -75,15 +75,15 @@ class EndTaskWindow(QMainWindow):
 
         end_task_button = QPushButton("End Task")
         end_task_button.setStyleSheet("""
-        font-size: 20px;
+        font-size: 30px;
         padding: 20px 40px;
         background-color: #3498db;
         color: white;
         border: none;
         border-radius: 15px;
         """)
-        end_task_button.setMaximumWidth(100) 
-        end_task_button.setMaximumHeight(30) 
+        end_task_button.setMinimumWidth(110)
+        end_task_button.setMinimumHeight(20)
         end_task_button.clicked.connect(self.end_task_button_clicked)
         main_layout.addWidget(end_task_button, alignment=Qt.AlignCenter)
 
